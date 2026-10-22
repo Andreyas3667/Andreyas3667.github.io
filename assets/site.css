@@ -36,8 +36,8 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
   font-family: var(--font); font-size: 1rem; line-height: 1.55;
-  font-feature-settings: "tnum" 1;
 }
+table, .num, td.num { font-variant-numeric: tabular-nums; }
 a { color: var(--teal); text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
