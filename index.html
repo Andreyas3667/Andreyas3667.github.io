@@ -9,6 +9,7 @@
 <meta property="og:description" content="IT infrastructure, web development and applied AI. Projects, experience and CV.">
 <meta property="og:image" content="assets/andreyas.jpg">
 <meta name="theme-color" content="#F2F4F7">
+<script>try{if(localStorage.getItem("theme")==="dark")document.documentElement.dataset.theme="dark";}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C1272D'/%3E%3Ctext x='16' y='22.5' text-anchor='middle' font-family='Arial' font-weight='800' font-size='18' fill='white'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +25,6 @@
   --red-ink: #A11F25;
   --strap: #C1272D;
   color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #111A2B; --card: #1A2539; --ink: #E7EBF2; --muted: #9AA6BA; --line: #2B374D;
-    --red: #EF5B5F; --red-ink: #F27A7D; --strap: #B7262C; color-scheme: dark;
-  }
 }
 :root[data-theme="dark"] {
   --paper: #111A2B; --card: #1A2539; --ink: #E7EBF2; --muted: #9AA6BA; --line: #2B374D;
@@ -58,14 +53,21 @@ p { margin: 0 0 1em; }
 .top nav a { text-decoration: none; color: var(--muted); font-size: .95rem; }
 .top nav a:hover { color: var(--ink); }
 .top nav { display: flex; gap: 22px; }
+.theme { font: inherit; font-size: .9rem; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--line); border-radius: 999px; padding: 6px 12px 6px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.theme:hover { border-color: var(--ink); }
+.theme svg { width: 16px; height: 16px; }
+.theme .moon { display: none; }
+:root[data-theme="dark"] .theme .sun { display: none; }
+:root[data-theme="dark"] .theme .moon { display: inline; }
 @media (max-width: 680px) { .top nav { display: none; } }
 
 /* hero */
 .hero { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; align-items: start; padding: 64px 0 72px; }
 .hero h1 {
-  font-size: clamp(2.3rem, 6vw, 4.4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.02;
-  font-variation-settings: "wdth" 118; max-width: 15ch; margin-bottom: 26px;
+  font-size: clamp(3.4rem, 12vw, 7.2rem); font-weight: 850; letter-spacing: -0.045em; line-height: .9;
+  font-variation-settings: "wdth" 125; margin: 6px 0 18px;
 }
+.hero .role { font-size: clamp(1.15rem, 2.2vw, 1.45rem); font-weight: 600; line-height: 1.35; max-width: 34ch; margin-bottom: 22px; }
 .hero .intro { font-size: 1.15rem; color: var(--muted); max-width: 52ch; margin-bottom: 30px; }
 .hero .intro strong { color: var(--ink); font-weight: 600; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -166,14 +168,20 @@ footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--m
       <a href="#education">Education</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="theme" type="button" id="themeBtn" aria-label="Switch to dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>
+      <span id="themeLabel">Light</span>
+    </button>
   </div>
 </header>
 
 <main class="wrap">
   <section class="hero">
     <div>
-      <h1>I keep the network running and build the web and AI tools around it.</h1>
-      <p class="intro"><strong>Andreyas, S.Kom.</strong> Informatics graduate from Palembang. For more than three years I have been the person in charge of a company's IT, from MikroTik networks and site-to-site VPN to the backup server. I am also a BNSP-certified web developer and I build practical AI applications.</p>
+      <h1>Andreyas</h1>
+      <p class="role">IT Support &amp; Infrastructure, Web Developer and Applied AI, based in Palembang.</p>
+      <p class="intro">Informatics graduate (S.Kom., 2026). For more than three years I have been the person in charge of a company's IT, from MikroTik networks and site-to-site VPN to the backup server. I am also a BNSP-certified web developer and I build practical AI applications.</p>
       <div class="actions">
         <a class="button solid" href="cv/Andreyas_CV.pdf" download>Download CV</a>
         <a class="button" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">Email me</a>
@@ -183,10 +191,10 @@ footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--m
       <span class="strap" aria-hidden="true"></span>
       <span class="clip" aria-hidden="true"></span>
       <div class="badge">
-        <p class="org">Palembang, Indonesia</p>
+        <p class="org">PT Gajah Unggul Internasional</p>
         <img src="assets/andreyas.jpg" alt="Andreyas in a black suit" width="640" height="800">
-        <div class="nm">Andreyas</div>
-        <div class="rl">IT Support &amp; Infrastructure, Web Developer, Applied AI</div>
+        <div class="nm">Andreyas, S.Kom.</div>
+        <div class="rl">IT Person in Charge since 2023</div>
         <div class="access">
           <p>Works on</p>
           <ul>
@@ -351,5 +359,22 @@ footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--m
   </section>
 </main>
 <footer><div class="wrap">Andreyas, Palembang, 2026</div></footer>
+<script>
+(function () {
+  var btn = document.getElementById("themeBtn"), label = document.getElementById("themeLabel"), root = document.documentElement;
+  function sync() {
+    var dark = root.dataset.theme === "dark";
+    label.textContent = dark ? "Dark" : "Light";
+    btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    document.querySelector('meta[name="theme-color"]').content = dark ? "#111A2B" : "#F2F4F7";
+  }
+  btn.addEventListener("click", function () {
+    if (root.dataset.theme === "dark") delete root.dataset.theme; else root.dataset.theme = "dark";
+    try { localStorage.setItem("theme", root.dataset.theme === "dark" ? "dark" : "light"); } catch (e) {}
+    sync();
+  });
+  sync();
+})();
+</script>
 </body>
 </html>
