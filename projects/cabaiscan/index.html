@@ -182,7 +182,7 @@
       const shown = mine.slice(0, 14).map((s) => `<img src="${s.thumb}" alt="">`).join("");
       div.innerHTML = `
         <div class="cls-head">
-          <span><strong>${esc(c.name)}</strong> <span class="muted">${mine.length} leaf${mine.length === 1 ? "" : "s"}</span></span>
+          <span><strong>${esc(c.name)}</strong> <span class="muted">${mine.length} ${mine.length === 1 ? "leaf" : "leaves"}</span></span>
           <span class="btn ghost file-btn" style="padding:5px 10px;font-size:.85rem">Add photos<input type="file" accept="image/*" multiple aria-label="Add photos to ${esc(c.name)}"></span>
         </div>
         <div class="thumbs">${shown || '<span class="empty">No leaves yet</span>'}${mine.length > 14 ? `<span class="more">+${mine.length - 14}</span>` : ""}</div>`;
