@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CabaiScan</title>
+<meta name="description" content="Identify chili leaf diseases in the browser with colour and texture features and K-Nearest Neighbors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+<style>
+  .grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .cls { border-top: 1px solid var(--line); padding: 12px 0; }
+  .cls:first-of-type { border-top: 0; }
+  .cls-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .cls-head strong { font-weight: 600; }
+  .thumbs { display: flex; flex-wrap: wrap; gap: 4px; min-height: 36px; }
+  .thumbs img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); background: #fff; }
+  .thumbs .more { font-size: .8rem; color: var(--muted); align-self: center; }
+  .empty { font-size: .85rem; color: var(--muted); }
+  .file-btn { position: relative; overflow: hidden; }
+  .file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .settings { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .drop { border: 2px dashed var(--line); border-radius: var(--radius-lg); padding: 20px; text-align: center; transition: border-color .15s, background .15s; }
+  .drop.over { border-color: var(--teal); background: var(--teal-soft); }
+  .views { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 4px; }
+  .views figure { margin: 0; text-align: center; font-size: .8rem; color: var(--muted); }
+  .views canvas { width: 128px; height: 128px; border-radius: 8px; border: 1px solid var(--line); display: block; margin-bottom: 4px; image-rendering: pixelated; background: #fff; }
+  .verdict { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin: 12px 0 4px; }
+  .verdict .label { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
+  .nn { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 8px; }
+  .nn div { display: flex; gap: 8px; align-items: center; padding: 6px; border: 1px solid var(--line); border-radius: 8px; font-size: .82rem; }
+  .nn img { width: 40px; height: 40px; border-radius: 6px; }
+  .nn .match { border-color: var(--teal); background: var(--teal-soft); }
+  .feat-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; margin-top: 16px; }
+  @media (max-width: 560px) { .feat-grid, .settings { grid-template-columns: 1fr; } }
+  .placeholder { color: var(--muted); font-size: .95rem; padding: 24px 0 8px; }
+  .lower { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 20px; margin-top: 20px; align-items: start; }
+  @media (max-width: 900px) { .lower { grid-template-columns: 1fr; } }
+  .steps { margin: 0; padding-left: 1.2em; }
+  .steps li { margin-bottom: .6em; }
+  .acc-cell.best { font-weight: 700; color: var(--teal); }
+  .cm td.hit { background: var(--teal-soft); font-weight: 700; }
+  .cm td.miss { background: var(--alert-soft); }
+  .status { font-size: .85rem; color: var(--muted); min-height: 1.3em; }
+</style>
+</head>
+<body>
+<header class="app-top">
+  <a class="back" href="../../">← Andreyas, portfolio</a>
+  <span class="muted">Built by Andreyas · <a href="https://github.com/Andreyas3667">GitHub</a></span>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>CabaiScan</h1>
+    <p>Identify chili leaf conditions from a photo. CabaiScan extracts colour features (HSV histograms and colour moments) and texture features (GLCM), then classifies the leaf with K-Nearest Neighbors, the same method as my undergraduate thesis. Everything runs in your browser; no photo leaves your device.</p>
+    <p class="note">The demo set is synthetic: leaves generated in code to illustrate four conditions. It shows how the pipeline behaves, not field accuracy. For real results, add your own labelled leaf photos to each class.</p>
+  </section>
+
+  <div class="grid">
+    <section class="panel" aria-labelledby="train-h">
+      <h2 id="train-h">Training set</h2>
+      <div class="row">
+        <button class="btn" id="loadDemo">Load demo leaves</button>
+        <button class="btn quiet" id="clearAll">Clear all</button>
+        <button class="btn quiet" id="exportModel">Export</button>
+        <span class="btn quiet file-btn">Import<input type="file" id="importModel" accept="application/json" aria-label="Import a saved training set"></span>
+      </div>
+      <p class="status" id="trainStatus" role="status"></p>
+      <div id="classes"></div>
+      <form class="row" id="addClassForm" style="margin-top:8px">
+        <label class="sr-only" for="newClass">New class name</label>
+        <input type="text" id="newClass" placeholder="Add a class, e.g. Thrips damage" style="flex:1;min-width:180px">
+        <button class="btn ghost" type="submit">Add class</button>
+      </form>
+      <div class="settings">
+        <label class="field">Neighbours (k): <strong id="kVal">3</strong>
+          <input type="range" id="k" min="1" max="9" step="2" value="3">
+        </label>
+        <label class="field">Features
+          <select id="featSet">
+            <option value="both">Colour + texture</option>
+            <option value="color">Colour only</option>
+            <option value="texture">Texture only</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="id-h">
+      <h2 id="id-h">Identify a leaf</h2>
+      <div class="drop" id="drop">
+        <p style="margin:0 0 10px">Drop a leaf photo here, or</p>
+        <div class="row" style="justify-content:center">
+          <span class="btn file-btn">Choose a photo<input type="file" id="queryFile" accept="image/*" aria-label="Choose a leaf photo to identify"></span>
+          <label class="sr-only" for="testClass">Condition for the generated test leaf</label>
+          <select id="testClass" style="width:auto"></select>
+          <button class="btn ghost" id="genTest">Generate unseen test leaf</button>
+        </div>
+        <p class="empty" style="margin:10px 0 0">Tip: photograph one leaf on a plain light background.</p>
+      </div>
+      <div id="result"><p class="placeholder">Load the demo leaves, then generate a test leaf or choose a photo to see the prediction and the evidence behind it.</p></div>
+    </section>
+  </div>
+
+  <div class="lower">
+    <section class="panel" aria-labelledby="eval-h">
+      <h2 id="eval-h">How accurate is it?</h2>
+      <p class="muted">Leave-one-out cross-validation: each training leaf is hidden in turn and classified using all the others. This compares colour, texture and combined features across values of k.</p>
+      <button class="btn" id="runEval">Run evaluation</button>
+      <div id="evalOut"></div>
+    </section>
+    <section class="panel" aria-labelledby="m-h">
+      <h2 id="m-h">Method</h2>
+      <ol class="steps">
+        <li><strong>Resize and segment.</strong> The photo is cropped to a 128×128 square; bright, unsaturated background pixels are removed so only the leaf is measured.</li>
+        <li><strong>Colour features (26).</strong> Hue histogram (12 bins of 30°), saturation and value histograms (4 bins each), plus mean and standard deviation of H, S and V.</li>
+        <li><strong>Texture features (6).</strong> A grey-level co-occurrence matrix at 16 levels, averaged over 0°, 45°, 90° and 135°: contrast, dissimilarity, homogeneity, energy, entropy and correlation.</li>
+        <li><strong>K-Nearest Neighbors.</strong> Features are z-score normalised, Euclidean distance finds the k closest training leaves, and the majority label wins (ties go to the nearest).</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<script src="core.js"></script>
+<script>
+(function () {
+  "use strict";
+  const C = window.CabaiCore;
+  const S = C.SIZE;
+  const STORE = "cabaiscan-v1";
+  let classes = C.CLASSES.map((c) => ({ ...c }));
+  let samples = [];   // {label, features, thumb, source}
+  let lastQuery = null;
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+  const nameOf = (id) => (classes.find((c) => c.id === id) || { name: id }).name;
+
+  function pxToCanvas(px, canvas) {
+    canvas.width = S; canvas.height = S;
+    canvas.getContext("2d").putImageData(new ImageData(new Uint8ClampedArray(px), S, S), 0, 0);
+    return canvas;
+  }
+  function thumbOf(px) {
+    const big = pxToCanvas(px, document.createElement("canvas"));
+    const t = document.createElement("canvas"); t.width = 48; t.height = 48;
+    t.getContext("2d").drawImage(big, 0, 0, 48, 48);
+    return t.toDataURL("image/jpeg", 0.8);
+  }
+  function maskToPx(px, mask) {
+    const out = new Uint8ClampedArray(px);
+    for (let p = 0; p < S * S; p++) if (!mask[p]) { out[p * 4] = 30; out[p * 4 + 1] = 42; out[p * 4 + 2] = 48; }
+    return out;
+  }
+
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify({ classes, samples })); } catch (e) { /* storage unavailable: keep in memory */ }
+  }
+  function restore() {
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (Array.isArray(d.classes) && Array.isArray(d.samples)) { classes = d.classes; samples = d.samples; }
+    } catch (e) { /* ignore */ }
+  }
+
+  function status(msg) { $("trainStatus").textContent = msg; }
+
+  function renderClasses() {
+    const host = $("classes");
+    host.innerHTML = "";
+    classes.forEach((c) => {
+      const mine = samples.filter((s) => s.label === c.id);
+      const div = document.createElement("div");
+      div.className = "cls";
+      const shown = mine.slice(0, 14).map((s) => `<img src="${s.thumb}" alt="">`).join("");
+      div.innerHTML = `
+        <div class="cls-head">
+          <span><strong>${esc(c.name)}</strong> <span class="muted">${mine.length} leaf${mine.length === 1 ? "" : "s"}</span></span>
+          <span class="btn ghost file-btn" style="padding:5px 10px;font-size:.85rem">Add photos<input type="file" accept="image/*" multiple aria-label="Add photos to ${esc(c.name)}"></span>
+        </div>
+        <div class="thumbs">${shown || '<span class="empty">No leaves yet</span>'}${mine.length > 14 ? `<span class="more">+${mine.length - 14}</span>` : ""}</div>`;
+      div.querySelector("input").addEventListener("change", (ev) => addFiles(c.id, ev.target.files));
+      host.appendChild(div);
+    });
+    const sel = $("testClass");
+    const prev = sel.value;
+    sel.innerHTML = '<option value="">Random condition</option>' + C.CLASSES.map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join("");
+    sel.value = prev;
+  }
+
+  function loadImageFile(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, 512 / Math.max(img.width, img.height));
+        const w = Math.max(1, Math.round(img.width * scale)), h = Math.max(1, Math.round(img.height * scale));
+        const c = document.createElement("canvas"); c.width = w; c.height = h;
+        const ctx = c.getContext("2d"); ctx.drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        resolve(C.toSquare(ctx.getImageData(0, 0, w, h)));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("unreadable")); };
+      img.src = url;
+    });
+  }
+
+  async function addFiles(label, files) {
+    let added = 0, failed = 0;
+    for (const f of files) {
+      try {
+        const px = await loadImageFile(f);
+        samples.push({ label, features: C.extract(px).features, thumb: thumbOf(px), source: "user" });
+        added++;
+      } catch (e) { failed++; }
+    }
+    save(); renderClasses();
+    status(`Added ${added} photo${added === 1 ? "" : "s"} to ${nameOf(label)}${failed ? `; ${failed} file${failed === 1 ? " was" : "s were"} not a readable image` : ""}.`);
+    if (lastQuery) identify(lastQuery.px, lastQuery.title);
+  }
+
+  function loadDemo() {
+    samples = samples.filter((s) => s.source !== "demo");
+    classes = C.CLASSES.map((c) => ({ ...c })).concat(classes.filter((c) => !C.CLASSES.some((d) => d.id === c.id)));
+    let seed = 1;
+    for (const c of C.CLASSES) for (let i = 0; i < 14; i++) {
+      const px = C.makeLeaf(c.id, seed++);
+      samples.push({ label: c.id, features: C.extract(px).features, thumb: thumbOf(px), source: "demo" });
+    }
+    save(); renderClasses();
+    status("Loaded 56 synthetic leaves, 14 per condition.");
+    if (lastQuery) identify(lastQuery.px, lastQuery.title);
+  }
+
+  function hueChart(f) {
+    const vals = f.slice(0, 12), max = Math.max(...vals, 0.01);
+    const w = 300, h = 120, bw = w / 12;
+    const bars = vals.map((v, i) => {
+      const bh = (v / max) * (h - 22);
+      return `<rect x="${i * bw + 2}" y="${h - 18 - bh}" width="${bw - 4}" height="${bh}" rx="2" fill="hsl(${i * 30 + 15} 62% 48%)"><title>${C.FEATURE_NAMES[i]}: ${(v * 100).toFixed(1)}% of leaf pixels</title></rect>`;
+    }).join("");
+    const ticks = [0, 60, 120, 180, 240, 300].map((d) => `<text x="${(d / 30) * bw}" y="${h - 4}" font-size="10" fill="currentColor">${d}°</text>`).join("");
+    return `<svg viewBox="0 0 ${w} ${h}" width="100%" role="img" aria-label="Hue histogram of the leaf" style="color:var(--muted)">${bars}${ticks}</svg>`;
+  }
+
+  function identify(px, title) {
+    lastQuery = { px, title };
+    const ex = C.extract(px);
+    const out = $("result");
+    const k = +$("k").value, set = $("featSet").value;
+    const labels = new Set(samples.map((s) => s.label));
+    let verdict;
+    if (samples.length === 0) {
+      verdict = `<p class="placeholder">The training set is empty. Load the demo leaves or add labelled photos, and the prediction will appear here.</p>`;
+    } else {
+      const r = C.classify(samples, ex.features, k, set);
+      const nn = r.neighbors.map((n) => `<div class="${n.sample.label === r.label ? "match" : ""}"><img src="${n.sample.thumb}" alt=""><span>${esc(nameOf(n.sample.label))}<br><span class="muted">distance ${n.dist.toFixed(2)}</span></span></div>`).join("");
+      const agree = r.votes[r.label];
+      verdict = `
+        <div class="verdict"><span class="label">${esc(nameOf(r.label))}</span>
+          <span class="tag ${r.confidence >= 0.67 ? "" : "gold"}">${agree} of ${r.neighbors.length} nearest neighbours agree</span></div>
+        ${labels.size < 2 ? '<p class="note">Only one class has training leaves, so every prediction will be that class. Add leaves to at least two classes.</p>' : ""}
+        <h3 style="margin-top:14px">Nearest training leaves</h3>
+        <div class="nn">${nn}</div>`;
+    }
+    const f = ex.features;
+    const tex = C.FEATURE_NAMES.slice(26).map((n, i) => `<tr><td>${n.replace("GLCM ", "")}</td><td class="num">${f[26 + i].toFixed(3)}</td></tr>`).join("");
+    const mom = `<tr><td>Mean hue</td><td class="num">${(f[20] * 360).toFixed(0)}°</td></tr><tr><td>Mean saturation</td><td class="num">${f[22].toFixed(2)}</td></tr><tr><td>Mean value</td><td class="num">${f[24].toFixed(2)}</td></tr>`;
+    out.innerHTML = `
+      <div class="views">
+        <figure><canvas id="vIn"></canvas><figcaption>${esc(title)}</figcaption></figure>
+        <figure><canvas id="vMask"></canvas><figcaption>Leaf mask (${(ex.coverage * 100).toFixed(0)}% of image)</figcaption></figure>
+      </div>
+      ${verdict}
+      <div class="feat-grid">
+        <div><h3>Colour: hue distribution</h3>${hueChart(f)}<table>${mom}</table></div>
+        <div><h3>Texture: GLCM</h3><table>${tex}</table></div>
+      </div>`;
+    pxToCanvas(px, $("vIn"));
+    pxToCanvas(maskToPx(px, ex.mask), $("vMask"));
+  }
+
+  let testSeed = 9000 + Math.floor(Math.random() * 1000);
+  function genTest() {
+    const pick = $("testClass").value || C.CLASSES[Math.floor(Math.random() * C.CLASSES.length)].id;
+    const px = C.makeLeaf(pick, testSeed++);
+    identify(px, `Generated: ${nameOf(pick)}`);
+  }
+
+  function runEval() {
+    const out = $("evalOut");
+    const labels = [...new Set(samples.map((s) => s.label))];
+    if (labels.length < 2 || samples.length < 4) {
+      out.innerHTML = `<p class="note">Evaluation needs at least two classes with leaves. Load the demo leaves or add photos first.</p>`;
+      return;
+    }
+    out.innerHTML = `<p class="status">Evaluating ${samples.length} leaves…</p>`;
+    setTimeout(() => {
+      const ks = [1, 3, 5, 7], sets = [["both", "Colour + texture"], ["color", "Colour only"], ["texture", "Texture only"]];
+      const res = sets.map(([s]) => ks.map((k) => C.loocv(samples, k, s, labels).accuracy));
+      const best = Math.max(...res.flat());
+      const rows = sets.map(([, n], i) => `<tr><td>${n}</td>${res[i].map((a) => `<td class="num acc-cell ${a === best ? "best" : ""}">${(a * 100).toFixed(1)}%</td>`).join("")}</tr>`).join("");
+      const k = +$("k").value, set = $("featSet").value;
+      const cur = C.loocv(samples, k, set, labels);
+      const cm = `<table class="cm"><tr><th>Actual ↓ / Predicted →</th>${labels.map((l) => `<th class="num">${esc(nameOf(l))}</th>`).join("")}</tr>` +
+        labels.map((a) => `<tr><th>${esc(nameOf(a))}</th>${labels.map((b) => { const v = cur.confusion[a][b]; return `<td class="num ${a === b ? "hit" : v ? "miss" : ""}">${v}</td>`; }).join("")}</tr>`).join("") + `</table>`;
+      out.innerHTML = `
+        <h3 style="margin-top:16px">Accuracy by feature set and k</h3>
+        <div style="overflow-x:auto"><table><tr><th>Features</th>${ks.map((k) => `<th class="num">k = ${k}</th>`).join("")}</tr>${rows}</table></div>
+        <h3 style="margin-top:16px">Confusion matrix, current settings (k = ${k}, ${esc($("featSet").selectedOptions[0].text.toLowerCase())})</h3>
+        <div style="overflow-x:auto">${cm}</div>
+        <p class="muted" style="margin-top:8px">Accuracy ${(cur.accuracy * 100).toFixed(1)}% on ${samples.length} leaves.${samples.every((s) => s.source === "demo") ? " Synthetic leaves are cleaner than field photos, so expect lower accuracy on real data." : ""}</p>`;
+    }, 20);
+  }
+
+  // events
+  $("loadDemo").addEventListener("click", loadDemo);
+  $("clearAll").addEventListener("click", () => {
+    samples = []; save(); renderClasses(); status("Training set cleared.");
+    if (lastQuery) identify(lastQuery.px, lastQuery.title);
+  });
+  $("genTest").addEventListener("click", genTest);
+  $("queryFile").addEventListener("change", async (ev) => {
+    const f = ev.target.files[0]; if (!f) return;
+    try { identify(await loadImageFile(f), f.name); } catch (e) { $("result").innerHTML = `<p class="note">That file could not be read as an image. Try a JPG or PNG photo.</p>`; }
+    ev.target.value = "";
+  });
+  const drop = $("drop");
+  ["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", async (e) => {
+    const f = [...e.dataTransfer.files].find((x) => x.type.startsWith("image/"));
+    if (!f) return;
+    try { identify(await loadImageFile(f), f.name); } catch (er) { /* ignore */ }
+  });
+  $("k").addEventListener("input", () => { $("kVal").textContent = $("k").value; if (lastQuery) identify(lastQuery.px, lastQuery.title); });
+  $("featSet").addEventListener("change", () => { if (lastQuery) identify(lastQuery.px, lastQuery.title); });
+  $("runEval").addEventListener("click", runEval);
+  $("addClassForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("newClass").value.trim(); if (!name) return;
+    const id = "c-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now().toString(36);
+    classes.push({ id, name }); $("newClass").value = ""; save(); renderClasses();
+    status(`Added class “${name}”. Use Add photos to give it training leaves.`);
+  });
+  $("exportModel").addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify({ app: "CabaiScan", version: 1, classes, samples })], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "cabaiscan-training-set.json"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    status(`Exported ${samples.length} leaves.`);
+  });
+  $("importModel").addEventListener("change", async (ev) => {
+    const f = ev.target.files[0]; if (!f) return;
+    try {
+      const d = JSON.parse(await f.text());
+      if (!Array.isArray(d.samples) || !Array.isArray(d.classes)) throw new Error("format");
+      classes = d.classes; samples = d.samples; save(); renderClasses();
+      status(`Imported ${samples.length} leaves in ${classes.length} classes.`);
+    } catch (e) { status("That file is not a CabaiScan export. Choose a .json file created with Export."); }
+    ev.target.value = "";
+  });
+
+  restore();
+  renderClasses();
+  if (samples.length) status(`Restored ${samples.length} leaves from your last visit.`);
+})();
+</script>
+</body>
+</html>
