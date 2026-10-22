@@ -108,7 +108,7 @@
   <header class="hero">
     <figure class="photo" style="margin:0">
       <img src="assets/andreyas.jpg" alt="Portrait of Andreyas in a black suit" width="640" height="800">
-      <figcaption>Palembang, Indonesia. Open to relocating to Jakarta, Singapore or Malaysia, or working remotely.</figcaption>
+      <figcaption>Palembang, Indonesia</figcaption>
     </figure>
     <div>
       <h1>Andreyas</h1>
@@ -123,15 +123,14 @@
       <ul class="hl fade" id="highlights"></ul>
       <div class="cta">
         <a class="btn" id="cvBtn" href="cv/Andreyas_CV.pdf" download>Download CV</a>
-        <a class="btn ghost" href="mailto:andreyasaja123@gmail.com">Email me</a>
-        <a class="btn quiet" href="https://wa.me/6282280890985" rel="noopener">WhatsApp</a>
+        <a class="btn ghost" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">Email me</a>
       </div>
     </div>
   </header>
 
   <section id="work" aria-labelledby="work-h">
     <h2 id="work-h">Work</h2>
-    <p class="lede">Three new projects you can open and use right now, followed by earlier work from university and my field practicum.</p>
+    <p class="lede">Three recent AI and infrastructure projects, followed by earlier work from university and my field practicum.</p>
     <div id="projects"></div>
   </section>
 
@@ -198,8 +197,8 @@
     <p class="lede">I usually reply within a day. Bahasa Indonesia and English are both fine.</p>
     <div class="contact">
       <div>
-        <a class="big" href="mailto:andreyasaja123@gmail.com">andreyasaja123@gmail.com</a>
-        <p style="margin-top:10px"><a href="https://wa.me/6282280890985" rel="noopener">+62 822-8089-0985</a> (phone and WhatsApp) · <a href="https://github.com/Andreyas3667" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/andreyas-b47ab3241/" rel="noopener">LinkedIn</a></p>
+        <a class="big" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">andreyasaja123@gmail.com</a>
+        <p style="margin-top:10px"><a href="https://github.com/Andreyas3667" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/andreyas-b47ab3241/" rel="noopener">LinkedIn</a></p>
       </div>
       <div class="cvs">
         <a class="btn" href="cv/Andreyas_CV.pdf" download style="text-decoration:none">Download CV (PDF)</a>
@@ -209,7 +208,7 @@
     </div>
   </section>
 </main>
-<footer class="page">Built and maintained by Andreyas. The demos run entirely in your browser and do not send data anywhere.</footer>
+<footer class="page">Built and maintained by Andreyas. </footer>
 
 <script>
 (function () {
@@ -219,7 +218,7 @@
       pitch: "I keep a company's network, servers and backups running, and I build the software and AI tools that make that work easier.",
       hl: ["3+ years as the person in charge of a company's IT, from MikroTik networks and VPN to a TrueNAS backup server I deployed.",
            "BNSP-certified Web Developer who builds with PHP, JavaScript and MySQL.",
-           "Thesis in computer vision with K-Nearest Neighbors, plus three AI tools you can try below."],
+           "Thesis in computer vision with K-Nearest Neighbors, plus three AI tools I built and deployed."],
       cv: "cv/Andreyas_CV.pdf",
       order: ["cabai", "tanya", "backup", "kopi", "lib", "pipe", "uiux"],
       skills: ["infra", "web", "ai", "admin", "design", "erp"],
@@ -255,7 +254,7 @@
       pitch: "I know IT controls from the operator's side: who has access, whether the backup really works, and what happens when a migration goes wrong.",
       hl: ["3+ years owning backup, access, network security and incident handling for a multi-branch company.",
            "BNSP competency units in information-security risk, UAT and change impact, plus SAP S/4HANA exposure.",
-           "GPA 3.24, above the 3.00 minimum most bank development programmes and Big 4 graduate roles ask for, and open to relocation."],
+           "GPA 3.24, above the 3.00 minimum most bank development programmes and Big 4 graduate roles ask for."],
       cv: "cv/Andreyas_CV.pdf",
       order: ["backup", "tanya", "cabai", "kopi", "lib", "pipe", "uiux"],
       skills: ["infra", "erp", "admin", "web", "ai", "design"],
@@ -310,7 +309,6 @@
           <div class="kind">${esc(p.kind)}</div>
           <p>${esc(p.body)}</p>
           <div class="tags">${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-          ${p.href ? `<div class="links"><a class="btn" href="${p.href}">Open ${esc(p.title)}</a><a class="btn quiet" href="https://github.com/Andreyas3667/Andreyas3667.github.io/tree/main/${p.href}" rel="noopener">Source code</a></div>` : p.repo ? `<div class="links"><a class="btn quiet" href="${p.repo}" rel="noopener">${esc(p.repoLabel || "Source code")}</a></div>` : ""}
         </div>
         <aside class="proof"><div class="n">${esc(p.proofN)}</div><div class="d">${esc(p.proofD)}</div></aside>
       </article>`;

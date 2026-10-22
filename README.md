@@ -30,4 +30,4 @@ python3 -m http.server 8000
 
 ## Contact
 
-andreyasaja123@gmail.com · +62 822-8089-0985 · Palembang, Indonesia
+andreyasaja123@gmail.com · Palembang, Indonesia
