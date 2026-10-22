@@ -3,349 +3,353 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Andreyas · IT, Web &amp; AI</title>
-<meta name="description" content="Andreyas, S.Kom. Informatics graduate from Palembang with 3+ years running IT infrastructure, a BNSP Web Developer certificate and hands-on AI projects.">
-<meta property="og:title" content="Andreyas · IT, Web & AI">
-<meta property="og:description" content="Infrastructure, web development and applied AI. Live demos, CV and credentials.">
+<title>Andreyas | IT, Web &amp; AI</title>
+<meta name="description" content="Andreyas, S.Kom. Informatics graduate from Palembang with 3+ years running company IT, a BNSP Web Developer certificate and applied AI projects.">
+<meta property="og:title" content="Andreyas | IT, Web & AI">
+<meta property="og:description" content="IT infrastructure, web development and applied AI. Projects, experience and CV.">
 <meta property="og:image" content="assets/andreyas.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231F6F78'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='17' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#F2F4F7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C1272D'/%3E%3Ctext x='16' y='22.5' text-anchor='middle' font-family='Arial' font-weight='800' font-size='18' fill='white'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,100,400&display=swap" rel="stylesheet">
 <style>
-  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .nav .in { max-width: 1120px; margin: 0 auto; padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 20px; }
-  .nav .name { font-weight: 800; text-decoration: none; color: var(--ink); margin-right: auto; }
-  .nav a.l { color: var(--muted); text-decoration: none; font-weight: 500; font-size: .95rem; }
-  .nav a.l:hover { color: var(--ink); }
-  @media (max-width: 640px) { .nav a.l { display: none; } }
-  .page { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
-  section:last-of-type { border-bottom: 0; }
-  section > h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
-  .lede { color: var(--muted); max-width: 62ch; margin-bottom: 28px; }
+:root {
+  --paper: #F2F4F7;
+  --card: #FFFFFF;
+  --ink: #15213B;
+  --muted: #586379;
+  --line: #D6DBE3;
+  --red: #C1272D;
+  --red-ink: #A11F25;
+  --strap: #C1272D;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111A2B; --card: #1A2539; --ink: #E7EBF2; --muted: #9AA6BA; --line: #2B374D;
+    --red: #EF5B5F; --red-ink: #F27A7D; --strap: #B7262C; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111A2B; --card: #1A2539; --ink: #E7EBF2; --muted: #9AA6BA; --line: #2B374D;
+  --red: #EF5B5F; --red-ink: #F27A7D; --strap: #B7262C; color-scheme: dark;
+}
 
-  /* hero */
-  .hero { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 48px; align-items: start; padding: 56px 0 48px; }
-  @media (max-width: 820px) { .hero { grid-template-columns: 1fr; gap: 24px; } .hero .photo { max-width: 220px; } }
-  .photo { position: relative; }
-  .photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); display: block; background: var(--surface); }
-  .photo figcaption { font-size: .85rem; color: var(--muted); margin-top: 10px; }
-  .hero h1 { font-size: clamp(3rem, 9vw, 6.2rem); font-weight: 900; letter-spacing: -0.045em; line-height: .92; margin-bottom: 18px; }
-  .pitch { font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.45; max-width: 46ch; margin-bottom: 26px; min-height: 3.5em; }
-  .roles { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); margin-bottom: 8px; }
-  .roles button { font: inherit; font-weight: 600; font-size: .95rem; padding: 9px 14px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; }
-  .roles button:hover { color: var(--ink); }
-  .roles button[aria-pressed="true"] { background: var(--teal); color: var(--surface); }
-  .roles-hint { font-size: .85rem; color: var(--muted); margin-bottom: 22px; }
-  .hl { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 10px; max-width: 60ch; }
-  .hl li { padding-left: 22px; position: relative; }
-  .hl li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 3px; background: var(--gold); transform: rotate(45deg); }
-  .cta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .cta .btn { text-decoration: none; display: inline-block; }
-  .fade { transition: opacity .25s ease; }
-  .fade.out { opacity: 0; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif; font-size: 1.0625rem; line-height: 1.6;
+  font-variation-settings: "wdth" 100;
+}
+a { color: inherit; text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+a:hover { color: var(--red-ink); }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3 { margin: 0; line-height: 1.1; }
+p { margin: 0 0 1em; }
 
-  /* projects */
-  .proj { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 28px; padding: 26px 0; border-top: 1px solid var(--line); }
-  .proj:first-child { border-top: 0; padding-top: 0; }
-  @media (max-width: 760px) { .proj { grid-template-columns: 1fr; gap: 12px; } }
-  .proj h3 { font-size: 1.35rem; margin-bottom: 6px; }
-  .proj .kind { font-size: .85rem; color: var(--muted); margin-bottom: 10px; }
-  .proj p { max-width: 64ch; }
-  .proj .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
-  .proj .links { display: flex; flex-wrap: wrap; gap: 8px; }
-  .proj .links a { text-decoration: none; }
-  .proof { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; align-self: start; }
-  .proof .n { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; color: var(--teal); }
-  .proof .d { font-size: .88rem; color: var(--muted); margin-top: 4px; }
-  .rel { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--gold); margin-left: 8px; vertical-align: 2px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
 
-  /* experience timeline (a real sequence) */
-  .tl { position: relative; margin: 0; padding: 0 0 0 28px; list-style: none; }
-  .tl::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
-  .tl li { position: relative; padding-bottom: 30px; }
-  .tl li::before { content: ""; position: absolute; left: -28px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 3px solid var(--teal); }
-  .tl li:first-child::before { background: var(--teal); }
-  .tl .when { font-size: .9rem; color: var(--muted); }
-  .tl h3 { margin: 2px 0 2px; font-size: 1.15rem; }
-  .tl .org { font-weight: 500; margin-bottom: 8px; }
-  .tl ul { margin: 0; padding-left: 1.1em; max-width: 70ch; }
-  .tl ul li { padding: 0 0 4px; }
-  .tl ul li::before { display: none; }
+/* top bar */
+.top { border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+.top .me { font-weight: 800; font-variation-settings: "wdth" 125; text-decoration: none; margin-right: auto; letter-spacing: -0.01em; }
+.top nav a { text-decoration: none; color: var(--muted); font-size: .95rem; }
+.top nav a:hover { color: var(--ink); }
+.top nav { display: flex; gap: 22px; }
+@media (max-width: 680px) { .top nav { display: none; } }
 
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
-  .cred h3 { font-size: 1.05rem; margin-bottom: 4px; }
-  .cred p { margin: 0 0 4px; font-size: .95rem; }
-  .skills { display: grid; gap: 14px; max-width: 80ch; }
-  .skills div { display: grid; grid-template-columns: 220px 1fr; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-  .skills div:last-child { border-bottom: 0; }
-  .skills strong { font-weight: 600; }
-  @media (max-width: 640px) { .skills div { grid-template-columns: 1fr; gap: 2px; } }
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; align-items: start; padding: 64px 0 72px; }
+.hero h1 {
+  font-size: clamp(2.3rem, 6vw, 4.4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.02;
+  font-variation-settings: "wdth" 118; max-width: 15ch; margin-bottom: 26px;
+}
+.hero .intro { font-size: 1.15rem; color: var(--muted); max-width: 52ch; margin-bottom: 30px; }
+.hero .intro strong { color: var(--ink); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.button {
+  display: inline-block; text-decoration: none; font-weight: 700; font-size: 1rem;
+  padding: 13px 20px; border-radius: 6px; border: 2px solid var(--ink); color: var(--ink);
+}
+.button.solid { background: var(--ink); color: var(--paper); }
+.button:hover { border-color: var(--red); color: var(--red-ink); }
+.button.solid:hover { background: var(--red); border-color: var(--red); color: #fff; }
 
-  .contact { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; }
-  @media (max-width: 760px) { .contact { grid-template-columns: 1fr; } }
-  .contact .big { font-size: clamp(1.4rem, 3.4vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; text-decoration: none; color: var(--ink); word-break: break-word; }
-  .contact .big:hover { color: var(--teal); }
-  .cvs { display: grid; gap: 6px; }
-  footer { padding: 28px 0 40px; color: var(--muted); font-size: .85rem; }
+/* the badge: the one loud thing on the page */
+.badge-hang { position: relative; padding-top: 70px; justify-self: center; width: 100%; max-width: 300px; }
+.strap {
+  position: absolute; top: -64px; left: 50%; width: 34px; height: 140px; transform: translateX(-50%);
+  background: repeating-linear-gradient(180deg, var(--strap) 0 14px, color-mix(in srgb, var(--strap) 85%, #000) 14px 16px);
+  border-radius: 0 0 4px 4px;
+}
+.clip { position: absolute; top: 58px; left: 50%; width: 54px; height: 22px; transform: translateX(-50%); background: linear-gradient(#C9CED6, #9AA2AE); border-radius: 5px; z-index: 2; }
+.badge {
+  position: relative; background: var(--card); border-radius: 14px; padding: 30px 24px 22px;
+  border: 1px solid var(--line); box-shadow: 0 1px 0 var(--line), 0 18px 40px -22px rgba(21, 33, 59, .45);
+  transform: rotate(-2.5deg); transform-origin: 50% -40px;
+}
+.badge::before { content: ""; position: absolute; top: 12px; left: 50%; width: 46px; height: 8px; transform: translateX(-50%); border-radius: 4px; background: var(--paper); border: 1px solid var(--line); }
+.badge .org { font-size: .78rem; color: var(--muted); text-align: center; margin: 6px 0 16px; }
+.badge img { display: block; width: 132px; height: 165px; object-fit: cover; border-radius: 8px; margin: 0 auto 16px; background: var(--paper); }
+.badge .nm { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.02em; text-align: center; font-variation-settings: "wdth" 120; }
+.badge .rl { text-align: center; color: var(--muted); font-size: .95rem; margin: 4px 0 16px; }
+.badge .access { border-top: 1px dashed var(--line); padding-top: 14px; }
+.badge .access p { font-size: .8rem; color: var(--muted); margin: 0 0 8px; text-align: center; }
+.badge ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.badge li { font-size: .82rem; font-weight: 600; padding: 3px 9px; border-radius: 4px; background: color-mix(in srgb, var(--red) 10%, transparent); color: var(--red-ink); }
+@media (prefers-reduced-motion: no-preference) {
+  .badge { animation: swing 1.6s cubic-bezier(.25,.9,.3,1) both; }
+  @keyframes swing { 0% { transform: rotate(9deg); } 45% { transform: rotate(-5deg); } 75% { transform: rotate(-1.5deg); } 100% { transform: rotate(-2.5deg); } }
+}
+
+@media (max-width: 820px) {
+  .hero { grid-template-columns: 1fr; gap: 28px; padding: 28px 0 48px; }
+  .badge-hang { order: -1; padding-top: 0; max-width: none; }
+  .strap, .clip, .badge::before { display: none; }
+  .badge { transform: none; animation: none; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 4px 16px; align-items: center; padding: 14px; text-align: left; }
+  .badge img { width: 76px; height: 95px; margin: 0; grid-column: 1; grid-row: 1 / span 4; }
+  .badge > :not(img) { grid-column: 2; }
+  .badge .org, .badge .nm, .badge .rl { text-align: left; margin: 0; }
+  .badge .org { font-size: .75rem; }
+  .badge .nm { font-size: 1.25rem; }
+  .badge .rl { font-size: .88rem; line-height: 1.35; }
+  .badge .access { border: 0; padding: 0; }
+  .badge .access p { display: none; }
+  .badge ul { justify-content: flex-start; }
+  .badge li { font-size: .75rem; padding: 2px 7px; }
+}
+
+/* sections: heading in a left column, content on the right */
+.sec { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 32px; padding: 56px 0; border-top: 1px solid var(--line); }
+.sec > h2 { font-size: 1.45rem; font-weight: 800; letter-spacing: -0.02em; font-variation-settings: "wdth" 115; position: sticky; top: 24px; align-self: start; }
+.sec .note { color: var(--muted); max-width: 60ch; margin-bottom: 30px; }
+@media (max-width: 820px) { .sec { grid-template-columns: 1fr; gap: 16px; padding: 44px 0; } .sec > h2 { position: static; } }
+
+/* rows with a year or date in a narrow column */
+.row { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.row:first-of-type { padding-top: 0; }
+.row:last-child { border-bottom: 0; }
+.row .when { font-weight: 700; color: var(--red-ink); font-variant-numeric: tabular-nums; font-size: .95rem; padding-top: 3px; }
+.row h3 { font-size: 1.3rem; font-weight: 750; letter-spacing: -0.015em; margin-bottom: 4px; }
+.row .sub { color: var(--muted); font-size: .95rem; margin-bottom: 10px; }
+.row p { max-width: 64ch; }
+.row ul { margin: 0; padding-left: 1.1em; max-width: 66ch; }
+.row ul li { margin-bottom: 6px; }
+.stack { font-size: .92rem; color: var(--muted); margin: 0; }
+.stack b { color: var(--ink); font-weight: 600; }
+@media (max-width: 560px) { .row { grid-template-columns: 1fr; gap: 4px; } }
+
+.creds { display: grid; gap: 28px; }
+.creds h3 { font-size: 1.15rem; font-weight: 750; margin-bottom: 4px; }
+.creds p { margin: 0 0 4px; max-width: 64ch; }
+.creds .muted { color: var(--muted); }
+
+.skills { margin: 34px 0 0; display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0; }
+.skills dt, .skills dd { padding: 12px 0; border-top: 1px solid var(--line); margin: 0; }
+.skills dt { font-weight: 700; padding-right: 16px; }
+@media (max-width: 560px) { .skills { grid-template-columns: 1fr; } .skills dd { border-top: 0; padding-top: 0; } }
+
+.mail { display: inline-block; font-size: clamp(1.3rem, 4.4vw, 2.6rem); font-weight: 800; letter-spacing: -0.03em; font-variation-settings: "wdth" 112; word-break: break-word; margin-bottom: 18px; text-decoration-thickness: 3px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-bottom: 28px; }
+footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--muted); font-size: .9rem; }
 </style>
 </head>
 <body>
-<nav class="nav" aria-label="Main">
-  <div class="in">
-    <a class="name" href="#top">Andreyas</a>
-    <a class="l" href="#work">Work</a>
-    <a class="l" href="#experience">Experience</a>
-    <a class="l" href="#credentials">Credentials</a>
-    <a class="btn" href="#contact" style="text-decoration:none;padding:7px 12px">Contact</a>
+<header class="top">
+  <div class="wrap">
+    <a class="me" href="#">Andreyas</a>
+    <nav aria-label="Sections">
+      <a href="#work">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
-</nav>
+</header>
 
-<main class="page" id="top">
-  <header class="hero">
-    <figure class="photo" style="margin:0">
-      <img src="assets/andreyas.jpg" alt="Portrait of Andreyas in a black suit" width="640" height="800">
-      <figcaption>Palembang, Indonesia</figcaption>
-    </figure>
+<main class="wrap">
+  <section class="hero">
     <div>
-      <h1>Andreyas</h1>
-      <p class="pitch fade" id="pitch">I keep a company's network, servers and backups running, and I build the software and AI tools that make that work easier.</p>
-      <div class="roles" role="group" aria-label="Show what is most relevant for the role you are hiring for" id="roles">
-        <button type="button" data-role="web">Web development</button>
-        <button type="button" data-role="infra">IT infrastructure</button>
-        <button type="button" data-role="ai">AI &amp; data</button>
-        <button type="button" data-role="risk">IT risk &amp; banking</button>
-      </div>
-      <p class="roles-hint" id="rolesHint">Hiring for one of these? Pick it and the page puts the most relevant work first.</p>
-      <ul class="hl fade" id="highlights"></ul>
-      <div class="cta">
-        <a class="btn" id="cvBtn" href="cv/Andreyas_CV.pdf" download>Download CV</a>
-        <a class="btn ghost" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">Email me</a>
+      <h1>I keep the network running and build the web and AI tools around it.</h1>
+      <p class="intro"><strong>Andreyas, S.Kom.</strong> Informatics graduate from Palembang. For more than three years I have been the person in charge of a company's IT, from MikroTik networks and site-to-site VPN to the backup server. I am also a BNSP-certified web developer and I build practical AI applications.</p>
+      <div class="actions">
+        <a class="button solid" href="cv/Andreyas_CV.pdf" download>Download CV</a>
+        <a class="button" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">Email me</a>
       </div>
     </div>
-  </header>
-
-  <section id="work" aria-labelledby="work-h">
-    <h2 id="work-h">Work</h2>
-    <p class="lede">Three recent AI and infrastructure projects, followed by earlier work from university and my field practicum.</p>
-    <div id="projects"></div>
+    <div class="badge-hang" aria-label="Profile card">
+      <span class="strap" aria-hidden="true"></span>
+      <span class="clip" aria-hidden="true"></span>
+      <div class="badge">
+        <p class="org">Palembang, Indonesia</p>
+        <img src="assets/andreyas.jpg" alt="Andreyas in a black suit" width="640" height="800">
+        <div class="nm">Andreyas</div>
+        <div class="rl">IT Support &amp; Infrastructure, Web Developer, Applied AI</div>
+        <div class="access">
+          <p>Works on</p>
+          <ul>
+            <li>Network</li><li>Servers</li><li>Web</li><li>AI</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="experience" aria-labelledby="exp-h">
+  <section class="sec" id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Projects</h2>
+    <div>
+      <article class="row">
+        <div class="when">2026</div>
+        <div>
+          <h3>CabaiScan</h3>
+          <div class="sub">AI image recognition for chili leaf diseases</div>
+          <p>A web app that looks at a photo of a chili leaf and tells you which disease it most likely has. It is built on the method from my thesis: the app reads the colour and texture of the leaf and compares it with labelled examples using K-Nearest Neighbors, then shows which examples the answer was based on.</p>
+          <p class="stack"><b>Built with</b> JavaScript, HTML5 Canvas, computer vision, machine learning</p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2026</div>
+        <div>
+          <h3>TanyaIT</h3>
+          <div class="sub">AI helpdesk assistant for office IT problems</div>
+          <p>Staff describe a problem in everyday Indonesian, such as "internet lemot" or "printer ngadat". TanyaIT sorts the ticket into a category and priority, finds the matching fix from a knowledge base of common problems and drafts a reply the IT team can send. When IT corrects a ticket, the assistant learns from it. It grew out of the requests I handle every day at work.</p>
+          <p class="stack"><b>Built with</b> JavaScript, HTML, CSS, machine learning, text classification, browser storage</p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2026</div>
+        <div>
+          <h3>BackupWatch</h3>
+          <div class="sub">Web dashboard that spots failing backups</div>
+          <p>Upload a backup log and the dashboard charts every run and flags the ones that need attention: failed or missed jobs, backups that suddenly shrink, unusually long runs and patterns that look like ransomware. Each warning explains in plain language what happened and what to check. It is modelled on the TrueNAS SCALE backups I run in production.</p>
+          <p class="stack"><b>Built with</b> JavaScript, HTML, CSS, data visualization, anomaly detection, CSV import</p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2025–2026</div>
+        <div>
+          <h3>Kopi Sriwijaya</h3>
+          <div class="sub">Coffee SME marketplace, field practicum with the provincial SME office</div>
+          <p>Connects South Sumatra coffee producers (UMKM) with buyers. Buyers find producers on an interactive map and order through a pre-filled WhatsApp message that is also saved as an order. Producers and admins get dashboards, revenue charts, safe stock updates, bulk CSV import and PDF, Excel and CSV reports. I built it in Laravel 12 first, then rebuilt it in Next.js with TypeScript and Prisma.</p>
+          <p class="stack"><b>Built with</b> Laravel 12, PHP, MySQL, Next.js, TypeScript, Prisma, NextAuth, Leaflet, Recharts</p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2026</div>
+        <div>
+          <h3>AI content production pipeline</h3>
+          <div class="sub">Personal project</div>
+          <p>A repeatable workflow that turns source material into finished short videos by chaining AI tools for the script, voice-over and visuals, with fixed rules for length, opening hook and pacing so every video comes out consistent.</p>
+          <p class="stack"><b>Built with</b> Claude, ElevenLabs, Edge-TTS, AI video generation, CapCut</p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2024</div>
+        <div>
+          <h3>Library management system</h3>
+          <div class="sub">University project</div>
+          <p>Books, members and loans built from scratch, with database rules that keep stock and loan records consistent.</p>
+          <p class="stack"><b>Built with</b> PHP, MySQL, HTML, CSS</p>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2024</div>
+        <div>
+          <h3>UI/UX case studies</h3>
+          <div class="sub">University coursework</div>
+          <p>User flows and interactive prototypes for a Human-Computer Interaction project and a Software Engineering final exam, reviewed against usability heuristics and contrast guidelines. <a href="https://www.figma.com/@andreyas3667" rel="noopener">See my Figma profile</a>.</p>
+          <p class="stack"><b>Built with</b> Figma</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" id="experience" aria-labelledby="exp-h">
     <h2 id="exp-h">Experience</h2>
-    <p class="lede">I started working while studying, so my degree and my job grew up together.</p>
-    <ol class="tl">
-      <li>
-        <div class="when">Jun 2023 to now</div>
-        <h3>IT Support Specialist, Person in Charge</h3>
-        <div class="org">PT Gajah Unggul Internasional, Palembang</div>
-        <ul>
-          <li>The designated owner of company-wide IT: infrastructure, network administration and day-to-day support for every department.</li>
-          <li>Deployed and run a TrueNAS SCALE server with scheduled company-wide backups, so business data no longer lives only on individual PCs.</li>
-          <li>Run MikroTik routers, managed switches, access points and Ruijie Cloud; set up WireGuard / IPsec site-to-site VPN between branches and Yeastar IP-PBX telephony.</li>
-          <li>Led data migration for a new business-system rollout, moving operational data across platforms without downtime or data loss.</li>
-          <li>Install and maintain hardware, software and CCTV, and triage concurrent tickets by business impact.</li>
-        </ul>
-      </li>
-      <li>
-        <div class="when">Sep 2022 to Mar 2023</div>
-        <h3>Graphic Designer</h3>
-        <div class="org">Clemen Baby Shop, Palembang</div>
-        <ul>
-          <li>Designed marketplace and social visuals for Shopee, Tokopedia and Instagram, and produced short-form video end to end.</li>
-          <li>This is where I learned visual hierarchy and typography, which I now use in interfaces and Figma prototypes.</li>
-        </ul>
-      </li>
-      <li>
-        <div class="when">Dec 2021 to Jan 2022</div>
-        <h3>Technician Intern</h3>
-        <div class="org">Bobby Komputer, Palembang</div>
-        <ul><li>Assembled PCs to customer specifications, installed operating systems and software, and carried out fibre-optic internet installations.</li></ul>
-      </li>
-    </ol>
-  </section>
-
-  <section id="credentials" aria-labelledby="cred-h">
-    <h2 id="cred-h">Education and credentials</h2>
-    <p class="lede">Originals of my diploma, transcript and certificates are available on request.</p>
-    <div class="two">
-      <div class="panel cred">
-        <h3>Bachelor of Computer Science (S.Kom.), Informatics</h3>
-        <p>Universitas Multi Data Palembang, Aug 2022 to Mar 2026</p>
-        <p>GPA 3.24 / 4.00, Very Satisfactory. Program accredited by LAM-INFOKOM.</p>
-        <p class="muted">Thesis: colour and texture feature extraction for chili leaf disease identification using K-Nearest Neighbors. CabaiScan above is a browser version of that method.</p>
-        <p class="muted">Grade A in Artificial Intelligence, Data Science, Digital Image Processing, Software Engineering, Database Systems II, Cloud Infrastructure and Computer Security.</p>
-      </div>
-      <div class="panel cred">
-        <h3>BNSP Certificate of Competence: Web Developer</h3>
-        <p>Issued through LSP Universitas Multi Data Palembang, Mar 2026. Valid until Mar 2029.</p>
-        <p class="muted">22 competency units, including SQL, debugging, user acceptance testing, information-security risk, migration to new technology and project scope and quality management.</p>
-        <h3 style="margin-top:16px">Introduction to SAP S/4HANA with Global Bike Inc. (SAP Fiori)</h3>
-        <p>SAP and Universitas Multi Data Palembang, Sep 2024 to Jan 2025</p>
-        <p class="muted">End-to-end ERP business processes in S/4HANA.</p>
-      </div>
+    <div>
+      <article class="row">
+        <div class="when">2023–now</div>
+        <div>
+          <h3>IT Support Specialist, Person in Charge</h3>
+          <div class="sub">PT Gajah Unggul Internasional, Palembang</div>
+          <ul>
+            <li>Responsible for company-wide IT: infrastructure, network administration and daily support for every department.</li>
+            <li>Deployed and run a TrueNAS SCALE server with scheduled company-wide backups, so business data no longer lives only on individual PCs.</li>
+            <li>Manage MikroTik routers, managed switches, access points and Ruijie Cloud; set up WireGuard and IPsec VPN between branches and Yeastar IP-PBX telephony.</li>
+            <li>Led the data migration for a new business system without downtime or data loss.</li>
+            <li>Install and maintain hardware, software and CCTV, and handle user requests by business impact.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2022–2023</div>
+        <div>
+          <h3>Graphic Designer</h3>
+          <div class="sub">Clemen Baby Shop, Palembang</div>
+          <ul>
+            <li>Designed marketplace and social media visuals for Shopee, Tokopedia and Instagram, and produced short-form video from concept to export.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="row">
+        <div class="when">2021–2022</div>
+        <div>
+          <h3>Technician Intern</h3>
+          <div class="sub">Bobby Komputer, Palembang</div>
+          <ul>
+            <li>Assembled PCs to customer specifications, installed Windows and software, and installed fibre-optic internet on site.</li>
+          </ul>
+        </div>
+      </article>
     </div>
-    <h3 style="margin-top:36px">Skills</h3>
-    <div class="skills" id="skills"></div>
   </section>
 
-  <section id="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h">Let's talk</h2>
-    <p class="lede">I usually reply within a day. Bahasa Indonesia and English are both fine.</p>
-    <div class="contact">
-      <div>
-        <a class="big" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">andreyasaja123@gmail.com</a>
-        <p style="margin-top:10px"><a href="https://github.com/Andreyas3667" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/andreyas-b47ab3241/" rel="noopener">LinkedIn</a></p>
+  <section class="sec" id="education" aria-labelledby="edu-h">
+    <h2 id="edu-h">Education</h2>
+    <div>
+      <div class="creds">
+        <div>
+          <h3>Bachelor of Computer Science (S.Kom.), Informatics</h3>
+          <p>Universitas Multi Data Palembang, 2022–2026. GPA 3.24 / 4.00.</p>
+          <p class="muted">Thesis on identifying chili leaf diseases from colour and texture features with K-Nearest Neighbors. Grade A in Artificial Intelligence, Data Science, Digital Image Processing, Software Engineering, Database Systems, Cloud Infrastructure and Computer Security.</p>
+        </div>
+        <div>
+          <h3>BNSP Certificate of Competence, Web Developer</h3>
+          <p>LSP Universitas Multi Data Palembang, valid 2026–2029.</p>
+          <p class="muted">22 competency units, including SQL, debugging, user acceptance testing, information-security risk and migration to new technology.</p>
+        </div>
+        <div>
+          <h3>Introduction to SAP S/4HANA (SAP Fiori)</h3>
+          <p>SAP and Universitas Multi Data Palembang, 2024–2025.</p>
+        </div>
       </div>
-      <div class="cvs">
-        <a class="btn" href="cv/Andreyas_CV.pdf" download style="text-decoration:none">Download CV (PDF)</a>
+      <dl class="skills">
+        <dt>Infrastructure</dt><dd>MikroTik, Ruijie Cloud, WireGuard and IPsec VPN, LAN/WAN troubleshooting, TrueNAS SCALE, Nextcloud, Yeastar IP-PBX, CCTV</dd>
+        <dt>Web development</dt><dd>PHP, Laravel, JavaScript, TypeScript, Next.js, React, Prisma, Tailwind CSS, MySQL, REST APIs, Git</dd>
+        <dt>AI</dt><dd>Machine learning, computer vision, image processing, Python, Claude and Claude Code, prompt engineering, AI automation</dd>
+        <dt>Systems</dt><dd>Windows deployment, SSH, remote support tools, scheduled backups, data migration</dd>
+        <dt>Design</dt><dd>Figma, Adobe Photoshop, Illustrator, Premiere Pro, After Effects, CapCut</dd>
+        <dt>Languages</dt><dd>Indonesian (native), English (professional)</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec" id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact</h2>
+    <div>
+      <p class="note">Open to roles in IT infrastructure, web development and AI, anywhere in Indonesia. I reply in Bahasa Indonesia or English.</p>
+      <a class="mail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=andreyasaja123@gmail.com" target="_blank" rel="noopener">andreyasaja123@gmail.com</a>
+      <div class="links">
         <a href="https://www.linkedin.com/in/andreyas-b47ab3241/" rel="noopener">LinkedIn</a>
-        <a href="https://www.figma.com/@andreyas3667" rel="noopener">Figma profile</a>
+        <a href="https://github.com/Andreyas3667" rel="noopener">GitHub</a>
+        <a href="https://www.figma.com/@andreyas3667" rel="noopener">Figma</a>
+        <a href="cv/Andreyas_CV.pdf" download>CV (PDF)</a>
       </div>
     </div>
   </section>
 </main>
-<footer class="page">Built and maintained by Andreyas. </footer>
-
-<script>
-(function () {
-  "use strict";
-  const ROLES = {
-    general: {
-      pitch: "I keep a company's network, servers and backups running, and I build the software and AI tools that make that work easier.",
-      hl: ["3+ years as the person in charge of a company's IT, from MikroTik networks and VPN to a TrueNAS backup server I deployed.",
-           "BNSP-certified Web Developer who builds with PHP, JavaScript and MySQL.",
-           "Thesis in computer vision with K-Nearest Neighbors, plus three AI tools I built and deployed."],
-      cv: "cv/Andreyas_CV.pdf",
-      order: ["cabai", "tanya", "backup", "kopi", "lib", "pipe", "uiux"],
-      skills: ["infra", "web", "ai", "admin", "design", "erp"],
-    },
-    web: {
-      pitch: "I build PHP, JavaScript and MySQL applications that hold up in production, because I'm also the one who keeps the servers running.",
-      hl: ["BNSP Certificate of Competence as a Web Developer, covering SQL, debugging, UAT and migration.",
-           "Built Kopi Sriwijaya, a three-role coffee SME marketplace, in Laravel and again in Next.js + TypeScript + Prisma.",
-           "Ship faster with Claude Code without skipping tests, security or the user's point of view."],
-      cv: "cv/Andreyas_CV.pdf",
-      order: ["kopi", "tanya", "cabai", "lib", "backup", "uiux", "pipe"],
-      skills: ["web", "design", "ai", "infra", "admin", "erp"],
-    },
-    infra: {
-      pitch: "For three years I've been the person who gets the call when the internet, the VPN or the file server goes down, and I fix the cause, not just the symptom.",
-      hl: ["Run MikroTik, Ruijie Cloud, managed switches, WireGuard / IPsec site-to-site VPN and Yeastar IP-PBX across branches.",
-           "Deployed a TrueNAS SCALE server for scheduled company-wide backups and led a data migration without data loss.",
-           "Write code to automate the boring parts: BackupWatch and TanyaIT came straight out of this job."],
-      cv: "cv/Andreyas_CV.pdf",
-      order: ["backup", "tanya", "kopi", "cabai", "lib", "pipe", "uiux"],
-      skills: ["infra", "admin", "web", "ai", "erp", "design"],
-    },
-    ai: {
-      pitch: "I turn machine-learning methods into tools people can actually use, starting with my thesis on identifying chili leaf diseases from photos.",
-      hl: ["Thesis: colour (HSV) and texture (GLCM) feature extraction with K-Nearest Neighbors for plant disease identification.",
-           "Built three deployed AI tools: in-browser image classification, a Naive Bayes + TF-IDF helpdesk assistant and robust anomaly detection.",
-           "Grade A in Artificial Intelligence, Data Science and Digital Image Processing, plus 3 years of production IT experience."],
-      cv: "cv/Andreyas_CV.pdf",
-      order: ["cabai", "tanya", "backup", "pipe", "kopi", "lib", "uiux"],
-      skills: ["ai", "web", "infra", "admin", "design", "erp"],
-    },
-    risk: {
-      pitch: "I know IT controls from the operator's side: who has access, whether the backup really works, and what happens when a migration goes wrong.",
-      hl: ["3+ years owning backup, access, network security and incident handling for a multi-branch company.",
-           "BNSP competency units in information-security risk, UAT and change impact, plus SAP S/4HANA exposure.",
-           "GPA 3.24, above the 3.00 minimum most bank development programmes and Big 4 graduate roles ask for."],
-      cv: "cv/Andreyas_CV.pdf",
-      order: ["backup", "tanya", "cabai", "kopi", "lib", "pipe", "uiux"],
-      skills: ["infra", "erp", "admin", "web", "ai", "design"],
-    },
-  };
-
-  const PROJECTS = {
-    cabai: { title: "CabaiScan", kind: "New · AI / computer vision · live demo", href: "projects/cabaiscan/",
-      body: "Identifies chili leaf conditions from a photo using the method from my thesis: HSV colour histograms and GLCM texture features, classified with K-Nearest Neighbors. It shows the leaf mask, every feature and the neighbours behind each prediction, and includes leave-one-out evaluation so you can compare colour, texture and combined features.",
-      tags: ["JavaScript", "Canvas API", "GLCM", "KNN", "Cross-validation"], proofN: "96–100%", proofD: "leave-one-out accuracy on the 56-leaf synthetic demo set. Real field photos will score lower; add your own to test." },
-    tanya: { title: "TanyaIT", kind: "New · AI / NLP for IT support · live demo", href: "projects/tanyait/",
-      body: "Reads helpdesk complaints written the way Indonesian office staff really write them, including slang like \"lemot\" and \"ngadat\". It predicts the category and priority with Naive Bayes plus business-impact rules, retrieves the fix from a 27-article knowledge base with TF-IDF and drafts the reply. Corrections retrain the model in place.",
-      tags: ["JavaScript", "Naive Bayes", "TF-IDF", "Indonesian NLP", "Local Storage"], proofN: "85%", proofD: "category accuracy in 5-fold cross-validation; priority within one level 93% of the time." },
-    backup: { title: "BackupWatch", kind: "New · anomaly detection for infrastructure · live demo", href: "projects/backupwatch/",
-      body: "Catches the backups that report \"success\" but are useless: sudden size drops after mass deletion, runs where most files changed (a ransomware sign), missed schedules and abnormal runtimes. Each alert explains why it fired and what to do next. Modelled on the TrueNAS SCALE routine I run at work.",
-      tags: ["JavaScript", "Robust z-score", "SVG charts", "CSV"], proofN: "10 / 10", proofD: "incidents injected into the 60-day sample log were flagged, with no false alarms at balanced sensitivity." },
-    kopi: { title: "Kopi Sriwijaya", kind: "Field practicum, 2025–2026 · full-stack web", href: null, repo: "https://github.com/Andreyas3667/kopi-sriwijaya",
-      body: "A marketplace connecting South Sumatra coffee SMEs (UMKM) with buyers, run by the provincial SME office. Buyers find producers on a Leaflet map and order through a pre-filled WhatsApp chat that is also saved as an order. Producers and admins get dashboards, revenue charts, stock that updates in atomic transactions, bulk CSV import and PDF, Excel and CSV reports. I built it first in Laravel 12, then rebuilt it in Next.js, TypeScript and Prisma.",
-      tags: ["Laravel 12", "Next.js", "TypeScript", "Prisma", "NextAuth", "Leaflet", "Recharts"], proofN: "3 roles", proofD: "buyer, UMKM and admin, each with its own dashboard, permissions and reports." },
-    lib: { title: "Library management information system", kind: "University project, 2024", href: null,
-      body: "Books, members and loans with full CRUD, built from scratch. Foreign keys and cascading rules keep inventory and loan records consistent: the same patterns behind CRM, inventory and point-of-sale systems.",
-      tags: ["PHP", "MySQL", "HTML", "CSS"], proofN: "3 tables", proofD: "with enforced relational integrity, authentication and session handling." },
-    pipe: { title: "AI content production pipeline", kind: "Personal project, 2026", href: null,
-      body: "A repeatable pipeline that turns source material into finished short-form videos by chaining AI tools for script, voice-over and visuals, with fixed rules for duration, hook and pacing so the output stays consistent.",
-      tags: ["Claude", "ElevenLabs / Edge-TTS", "AI video", "CapCut"], proofN: "End to end", proofD: "from raw source to exported video with minimal manual editing." },
-    uiux: { title: "UI/UX case studies", kind: "University coursework, 2024", href: null,
-      body: "Interface flows for a Human-Computer Interaction project and a Software Engineering final exam, from wireframes to interactive Figma prototypes, checked against Nielsen's heuristics and contrast guidelines.",
-      tags: ["Figma", "Prototyping", "Heuristic evaluation"], proofN: "2 prototypes", proofD: "high-fidelity, covering onboarding through key tasks.", repo: "https://www.figma.com/@andreyas3667", repoLabel: "Figma profile" },
-  };
-
-  const SKILLS = {
-    web: ["Web and programming", "PHP, Laravel, JavaScript, TypeScript, Next.js, React, Prisma, Tailwind CSS, MySQL / MariaDB, SQL, Kotlin, REST APIs, Leaflet / OpenStreetMap, WhatsApp API, Git"],
-    ai: ["AI and data", "K-Nearest Neighbors, Naive Bayes, colour and GLCM texture features, TF-IDF retrieval, anomaly detection, Python, Claude / Claude Code, prompt engineering"],
-    infra: ["Infrastructure and networking", "MikroTik (Winbox), Ruijie Cloud, WireGuard / IPsec VPN, LAN / WAN troubleshooting, TrueNAS SCALE, Nextcloud, Yeastar IP-PBX, CCTV / IP cameras"],
-    admin: ["Systems administration", "SSH (PuTTY), FileZilla, AnyDesk, Remote Desktop, scheduled backups, data migration, Windows deployment"],
-    erp: ["Enterprise and governance", "SAP S/4HANA (Fiori) fundamentals, user acceptance testing, information-security risk, change impact analysis"],
-    design: ["Design", "Figma, Adobe Photoshop, Illustrator, Premiere Pro, After Effects, Lightroom, CapCut"],
-  };
-
-  const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
-  const $ = (id) => document.getElementById(id);
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function renderProjects(role) {
-    const r = ROLES[role];
-    $("projects").innerHTML = r.order.map((k, i) => {
-      const p = PROJECTS[k];
-      const rel = role !== "general" && i < 2 ? `<span class="rel">Most relevant</span>` : "";
-      return `<article class="proj">
-        <div>
-          <h3>${esc(p.title)}${rel}</h3>
-          <div class="kind">${esc(p.kind)}</div>
-          <p>${esc(p.body)}</p>
-          <div class="tags">${p.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-        </div>
-        <aside class="proof"><div class="n">${esc(p.proofN)}</div><div class="d">${esc(p.proofD)}</div></aside>
-      </article>`;
-    }).join("");
-  }
-
-  function renderSkills(role) {
-    $("skills").innerHTML = ROLES[role].skills.map((k) => `<div><strong>${esc(SKILLS[k][0])}</strong><span>${esc(SKILLS[k][1])}</span></div>`).join("");
-  }
-
-  function setRole(role, push) {
-    if (!ROLES[role]) role = "general";
-    const r = ROLES[role];
-    document.querySelectorAll("#roles button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.role === role)));
-    const swap = () => {
-      $("pitch").textContent = r.pitch;
-      $("highlights").innerHTML = r.hl.map((h) => `<li>${esc(h)}</li>`).join("");
-      $("pitch").classList.remove("out"); $("highlights").classList.remove("out");
-    };
-    if (reduce || !push) swap();
-    else { $("pitch").classList.add("out"); $("highlights").classList.add("out"); setTimeout(swap, 180); }
-    $("cvBtn").href = r.cv;
-    $("rolesHint").textContent = role === "general" ? "Hiring for one of these? Pick it and the page puts the most relevant work first." : "Showing the most relevant work first. Pick the same role again to see everything evenly.";
-    renderProjects(role); renderSkills(role);
-    if (push) {
-      const url = new URL(location.href);
-      if (role === "general") url.searchParams.delete("for"); else url.searchParams.set("for", role);
-      history.replaceState(null, "", url);
-    }
-  }
-
-  $("roles").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b) return;
-    setRole(b.getAttribute("aria-pressed") === "true" ? "general" : b.dataset.role, true);
-  });
-  setRole(new URL(location.href).searchParams.get("for") || "general", false);
-})();
-</script>
+<footer><div class="wrap">Andreyas, Palembang, 2026</div></footer>
 </body>
 </html>
